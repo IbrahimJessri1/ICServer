@@ -1,0 +1,20 @@
+from fastapi import APIRouter, File, UploadFile, status, HTTPException
+from fastapi.responses import StreamingResponse
+from io import BytesIO
+from repositories import colorizer as repo_colorizer
+
+colorizer_router = APIRouter(
+    prefix="/colorize",
+    tags = ['Colorize']
+)
+
+initialize_colorizer_model()
+
+@colorizer_router.post('/', status_code=status.HTTP_200_OK)
+async def colorize(file: UploadFile = File(...)):
+    if file.content_type.startswith('image/'):
+        image_data = await file.read()
+        colorized_image = repo_colorizer.colorize(image_data)
+        return StreamingResponse(BytesIO(colorized_image), media_type=file.content_type)
+    else:
+        raise HTTPException(status_code=400, detail="File not an image.")
