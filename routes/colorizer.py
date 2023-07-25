@@ -7,11 +7,10 @@ colorizer_router = APIRouter(
     tags = ['Colorize']
 )
 
-# @colorizer_router.on_event("startup")
-# async def initialize_model():
-#     colorizer_router.model = Colorizer()
+@colorizer_router.on_event("startup")
+async def initialize_model():
+    colorizer_router.model = Colorizer()
 
-colorizer_router.model = None
 
 @colorizer_router.post('/', status_code=status.HTTP_200_OK)
 async def colorize(file: UploadFile = File(...)):
