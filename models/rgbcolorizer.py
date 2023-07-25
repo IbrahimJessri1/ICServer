@@ -2,10 +2,11 @@
 from config import colorization_consts
 import tensorflow as tf
 import numpy as np
+from models.basecolorizer import BaseColorizer
 
-class Colorizer:
+class RGBColorizer(BaseColorizer):
     def __init__(self):
-        self.model = tf.keras.models.load_model(colorization_consts.MODEL_PATH)
+        super().__init__(colorization_consts.RGB_MODEL_PATH)
 
     def colorize(self, norm_gray_image):
         # Convert numpy array to tensor

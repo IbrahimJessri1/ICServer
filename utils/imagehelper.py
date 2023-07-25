@@ -3,8 +3,8 @@ import numpy as np
 from config import colorization_consts
 class ImageHelper:
 
-    def resize_input(img):
-        return cv2.resize(img, (colorization_consts.IMAGE_HEIGHT, colorization_consts.IMAGE_WIDTH))
+    def resize_input(img, color):
+        return cv2.resize(img, (colorization_consts.IMAGE_HEIGHT[color], colorization_consts.IMAGE_WIDTH[color]))
 
     def resize(img, size):
         return cv2.resize(img, size)
@@ -18,7 +18,12 @@ class ImageHelper:
     def rgb_to_bgr(img):
         return cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
 
-
+    def bgr_to_lab(img):
+        return cv2.cvtColor(img, cv2.COLOR_BGR2LAB) 
+    
+    def lab_to_bgr(img):
+        return cv2.cvtColor(img, cv2.COLOR_LAB2BGR) 
+    
     def read_image(image_data):
         np_array = np.frombuffer(image_data, np.uint8)
         image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
