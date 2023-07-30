@@ -12,11 +12,11 @@ colorizer_router = APIRouter(
 @colorizer_router.on_event("startup")
 async def initialize_model():
     colorizer_router.rgb_model = RGBColorizer()
-    colorizer_router.lab_model1 = LabColorizer(colorization_consts.LAB_MODEL_PATH_1)
+    colorizer_router.lab_model1 = LabColorizer(colorization_consts.LAB_MODEL_PATH_1, neg_norm= False)
     colorizer_router.lab_model2 = LabColorizer(colorization_consts.LAB_MODEL_PATH_2)
     colorizer_router.lab_model4 = LabColorizer(colorization_consts.LAB_MODEL_PATH_4)
     colorizer_router.lab_model5 = LabColorizer(colorization_consts.LAB_MODEL_PATH_5)
-    colorizer_router.lab_model6 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6, True)
+    colorizer_router.lab_model6 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6, weights=True)
 
 @colorizer_router.post('/rgb', status_code=status.HTTP_200_OK)
 async def colorize(file: UploadFile = File(...)):

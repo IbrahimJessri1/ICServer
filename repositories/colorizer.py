@@ -35,8 +35,10 @@ def colorize_lab(colorizer_model, image_data):
     input_image = ImageHelper.resize_input(input_image, 'lab')
     
     input_image *= 2.0 / 100.0 
-    norm_input_image = input_image - 1.0
-    # norm_input_image = input_image / 100.0
+    if colorizer_model.neg_norm:
+        norm_input_image = input_image - 1.0
+    else:
+        norm_input_image = input_image / 100.0
 
     colorized_image = colorizer_model.colorize(norm_input_image)
     lab_float = (colorized_image.astype(np.float32)) 
