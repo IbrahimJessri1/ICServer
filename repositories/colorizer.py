@@ -5,12 +5,13 @@ from fastapi import HTTPException
 from fastapi.responses import StreamingResponse
 from io import BytesIO
 import numpy as np
+from config import colorization_consts
 
-def colorize(colorizer_model : BaseColorizer, image_data, content_type, rgb = True):
+def colorize(colorizer_model : BaseColorizer, image_data, content_type, rgb = True, enhancer = None):
     if rgb:
         colorized_image = colorize_rgb(colorizer_model, image_data)
     else:
-        colorized_image = colorize_lab(colorizer_model, image_data)
+        colorized_image = colorize_lab(colorizer_model, image_data, enhancer=enhancer)
     try:
         output_image_bytes, media_type = ImageHelper.image_to_output_file(colorized_image, content_type)
     except:
@@ -27,13 +28,13 @@ def colorize_rgb(colorizer_model, image_data):
     colorized_image = ImageHelper.rgb_to_bgr(colorized_image)
     return ImageHelper.resize(colorized_image, (size[1], size[0]))
 
-def colorize_lab(colorizer_model, image_data):
-    image = ImageHelper.read_image(image_data) / 255.0
+def colorize_lab(colorizer_model, image_data, enhancer = None):
+    image = ImageHelper.read_image(image_data)
+    size = image.shape
+    image = ImageHelper.resize_image(image, (colorization_consts.IMAGE_HEIGHT['lab'],colorization_consts.IMAGE_WIDTH['lab']))
+    image /= 255.0
     input_image = ImageHelper.bgr_to_lab(image)
-    size = input_image.shape
     input_image = input_image[:, :, 0]
-    input_image = ImageHelper.resize_input(input_image, 'lab')
-    
     if colorizer_model.neg_norm:
         input_image *= 2.0 / 100.0 
         norm_input_image = input_image - 1.0
@@ -45,4 +46,5 @@ def colorize_lab(colorizer_model, image_data):
     lab_float[:, :, 0] *= 100.0 / 255.0
     lab_float[:, :, 1:] -= 128.0
     colorized_image = ImageHelper.lab_to_bgr(lab_float) * 255.0
-    return ImageHelper.resize(colorized_image, (size[1], size[0]))
+    # colorized_image = ImageHelper.denoise(colorized_image)
+    return ImageHelper.resize_image(colorized_image, (size[1], size[0]), enhancer)

@@ -1,8 +1,14 @@
 IMAGE_HEIGHT = {'rgb' :256 , 'lab' : 256}
 IMAGE_WIDTH = {'rgb' :256 , 'lab' : 256}
+SR_MODEL_PATH = 'resources/RealESRGAN/RealESRGAN_x4plus.pth'
 RGB_MODEL_PATH = 'resources/default/gen15'
 LAB_MODEL_PATH_1 = 'resources/1/gen5'
 LAB_MODEL_PATH_2 = 'resources/2/gen27'
 LAB_MODEL_PATH_4 = 'resources/4/gen14'
 LAB_MODEL_PATH_5 = 'resources/5/gen5'
-LAB_MODEL_PATH_6 = 'resources/6/gen21.h5'
+LAB_MODEL_PATH_6_1 = 'resources/6/gen9.h5'
+LAB_MODEL_PATH_6_2 = 'resources/6/gen15.h5'
+LAB_MODEL_PATH_6_3 = 'resources/6/gen21.h5'
+LAB_MODEL_PATH_6_4 = 'resources/6/gen25.h5'
+LAB_MODEL_PATH_6_5 = 'resources/6/gen39.h5'
+LAB_MODEL_PATH_6_6 = 'resources/6/gen40.h5'

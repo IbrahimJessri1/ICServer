@@ -4,3 +4,8 @@ python-multipart
 tensorflow
 opencv-python
 tensorflow_addons
+Pillow
+torch
+git+https://github.com/sberbank-ai/Real-ESRGAN.git
+torchvision
+torchaudio
