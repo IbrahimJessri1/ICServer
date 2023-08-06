@@ -19,9 +19,9 @@ async def initialize_model():
     colorizer_router.lab_model4 = LabColorizer(colorization_consts.LAB_MODEL_PATH_4)
     colorizer_router.lab_model5 = LabColorizer(colorization_consts.LAB_MODEL_PATH_5)
     colorizer_router.lab_model6_1 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_1, weights=True)
+    colorizer_router.lab_model6_4 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_4, weights=True)
     colorizer_router.lab_model6_2 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_2, weights=True)
     colorizer_router.lab_model6_3 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_3, weights=True)
-    colorizer_router.lab_model6_4 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_4, weights=True)
     colorizer_router.lab_model6_5 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_5, weights=True)
     colorizer_router.lab_model6_6 = LabColorizer(colorization_consts.LAB_MODEL_PATH_6_6, weights=True)
 
