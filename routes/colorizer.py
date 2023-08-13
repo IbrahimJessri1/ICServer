@@ -5,6 +5,7 @@ from models.labcolorizer import LabColorizer
 from utils.realesrgan import RealESRGANEnhancer
 from config import colorization_consts
 from models.generator13 import Generator
+from pathlib import Path
 
 colorizer_router = APIRouter(
     prefix="/colorize",
@@ -29,7 +30,7 @@ async def colorize(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="File not an image.")
     except:
-        raise HTTPException(status_code=400, detail="File not an image.")
+        raise HTTPException(status_code=400, detail="Something Went Wrong.")
     
 @colorizer_router.post('/gen11', status_code=status.HTTP_200_OK)
 async def colorize(file: UploadFile = File(...)):
@@ -40,7 +41,7 @@ async def colorize(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="File not an image.")
     except:
-        raise HTTPException(status_code=400, detail="File not an image.")
+        raise HTTPException(status_code=400, detail="Something Went Wrong.")
     
 @colorizer_router.post('/gen12', status_code=status.HTTP_200_OK)
 async def colorize(file: UploadFile = File(...)):
@@ -51,7 +52,7 @@ async def colorize(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="File not an image.")
     except:
-        raise HTTPException(status_code=400, detail="File not an image.")
+        raise HTTPException(status_code=400, detail="Something Went Wrong.")
     
 @colorizer_router.post('/gen13', status_code=status.HTTP_200_OK)
 async def colorize(file: UploadFile = File(...)):
@@ -62,7 +63,7 @@ async def colorize(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="File not an image.")
     except:
-        raise HTTPException(status_code=400, detail="File not an image.")
+        raise HTTPException(status_code=400, detail="Something Went Wrong.")
     
 
 @colorizer_router.post('/gen14', status_code=status.HTTP_200_OK)
@@ -74,4 +75,40 @@ async def colorize(file: UploadFile = File(...)):
         else:
             raise HTTPException(status_code=400, detail="File not an image.")
     except:
-        raise HTTPException(status_code=400, detail="File not an image.")
+        raise HTTPException(status_code=400, detail="Something Went Wrong.")
+    
+
+
+
+# @colorizer_router.get("/test_all_models", status_code=status.HTTP_200_OK)
+# async def test_all_models(input_folder: str, output_folder: str):
+
+#     input_path = Path(input_folder)
+#     output_path = Path(output_folder)
+
+#     # Check if folders exist
+#     if not input_path.is_dir() or not output_path.is_dir():
+#         raise HTTPException(status_code=400, detail="Input or output path does not exist.")
+
+#     for image_file in input_path.glob("*"): # this will get all files, you can filter with "*.jpg" or "*.png" if needed
+#         if image_file.is_file():
+#             with open(image_file, "rb") as f:
+#                 image_data = f.read()
+
+#                 for model_suffix in ["gen_8", "gen_11", "gen_12", "gen_13", "gen_14"]:
+#                     model = getattr(colorizer_router, f"model_{model_suffix}", None)
+#                     if model:
+#                         # change output of repo_colorizer.colorize to only BytesIO(...) instead of StreamingResponse
+#                         if model_suffix == 'gen_8':
+#                             output_image_data = repo_colorizer.colorize(model, image_data, 'image/jpeg', True, enhancer = colorizer_router.sr_model)
+#                         else:
+#                             output_image_data = repo_colorizer.colorize(model, image_data, 'image/jpeg', False, enhancer = colorizer_router.sr_model)
+                            
+#                         output_image_bytes = output_image_data.getvalue()
+
+#                         output_filename = output_path / f"{image_file.stem}_{model_suffix}{image_file.suffix}"
+#                         with open(output_filename, "wb") as out_f:
+#                             out_f.write(output_image_bytes)
+
+    
+#     return {"status": "success", "message": f"Processed images saved in {output_folder}"}

@@ -14,10 +14,10 @@ def colorize(colorizer_model : BaseColorizer, image_data, content_type, rgb = Tr
         else:
             colorized_image = colorize_lab(colorizer_model, image_data, enhancer=enhancer)
         
-            output_image_bytes, media_type = ImageHelper.image_to_output_file(colorized_image, content_type)
+        output_image_bytes, media_type = ImageHelper.image_to_output_file(colorized_image, content_type)
     except:
         raise HTTPException(status_code=400, detail="Something went wrong..")
-    return StreamingResponse(BytesIO(output_image_bytes), media_type=media_type)
+    return BytesIO(output_image_bytes)#StreamingResponse(BytesIO(output_image_bytes), media_type=media_type)
 
 def colorize_rgb(colorizer_model, image_data, enhancer = None):
     image = ImageHelper.read_image(image_data)
