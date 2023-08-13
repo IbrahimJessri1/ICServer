@@ -146,3 +146,4 @@ class Generator:
         self.model = tf.keras.Model(inputs=combined_model.input, outputs=x)
         if model_path is not None:
             self.model.load_weights(model_path)
+

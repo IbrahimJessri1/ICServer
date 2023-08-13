@@ -8,12 +8,13 @@ import numpy as np
 from config import colorization_consts
 
 def colorize(colorizer_model : BaseColorizer, image_data, content_type, rgb = True, enhancer = None):
-    if rgb:
-        colorized_image = colorize_rgb(colorizer_model, image_data, enhancer=enhancer)
-    else:
-        colorized_image = colorize_lab(colorizer_model, image_data, enhancer=enhancer)
     try:
-        output_image_bytes, media_type = ImageHelper.image_to_output_file(colorized_image, content_type)
+        if rgb:
+            colorized_image = colorize_rgb(colorizer_model, image_data, enhancer=enhancer)
+        else:
+            colorized_image = colorize_lab(colorizer_model, image_data, enhancer=enhancer)
+        
+            output_image_bytes, media_type = ImageHelper.image_to_output_file(colorized_image, content_type)
     except:
         raise HTTPException(status_code=400, detail="Something went wrong..")
     return StreamingResponse(BytesIO(output_image_bytes), media_type=media_type)
